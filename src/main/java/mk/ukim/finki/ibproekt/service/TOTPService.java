@@ -120,10 +120,10 @@ public class TOTPService {
 
     public Map<String, String> verifyTOTP(String userTOTP) {
         Totp dbTOPT = totpRepository.findByTotp(userTOTP);
-        if (userTOTP.equals(dbTOPT.getTotp()) && verifyTime(dbTOPT.getDateIssued())) {
-            return Map.of("success", "You entered correct TOTP!");
+        if (dbTOPT != null && userTOTP.equals(dbTOPT.getTotp()) && verifyTime(dbTOPT.getDateIssued())) {
+            return Map.of("message", "success");
         }
 
-        return Map.of("error", "You entered incorrect TOTP!");
+        return Map.of("message", "error");
     }
 }
